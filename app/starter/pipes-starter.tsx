@@ -1,4 +1,4 @@
-import { networks as cliNetworks } from '@subsquid/pipes-cli/config/networks'
+import { networks as cliNetworks } from '@iankressin/pipes-cli/config/networks'
 import { sinks as cliSinks } from '@subsquid/pipes-cli/config/sinks'
 import { templateOptions as cliTemplateOptions } from '@subsquid/pipes-cli/config/templates'
 import {
