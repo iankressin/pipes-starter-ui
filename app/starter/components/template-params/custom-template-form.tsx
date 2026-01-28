@@ -70,10 +70,10 @@ export function CustomTemplateForm({ networkType, network, defaultValues, onSubm
 
       const metadata: ContractMetadata[] = await response.json()
       
-      // Initialize with all events selected
+      // Initialize with no events selected (explicit user opt-in)
       const contractsWithSelection: ContractWithSelection[] = metadata.map((contract) => ({
         ...contract,
-        selectedEvents: new Set(contract.contractEvents.map((e) => e.name)),
+        selectedEvents: new Set(),
       }))
 
       setContracts(contractsWithSelection)

@@ -2,7 +2,7 @@ import type { ActionFunctionArgs } from 'react-router'
 import { createHash } from 'node:crypto'
 import { db } from '~/services/db.server'
 
-export function configHash(input: string, bytes = 8): string {
+function configHash(input: string, bytes = 8): string {
   // 8 bytes = 64-bit, produces 16 hex chars
   const h = createHash('sha256').update(input).digest()
   return h.subarray(0, bytes).toString('hex')

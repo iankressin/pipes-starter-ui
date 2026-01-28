@@ -29,7 +29,6 @@ export async function action({ request }: ActionFunctionArgs) {
 
     const abiService = new SqdAbiService()
     const metadata = await abiService.getContractData(networkType, network, addresses)
-    console.log({ metadata })
 
     return new Response(JSON.stringify(metadata), { headers: { 'Content-Type': 'application/json' } })
   } catch (error) {
