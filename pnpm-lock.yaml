@@ -12,8 +12,8 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2(react-hook-form@7.71.1(react@19.2.3))
       '@iankressin/pipes-cli':
-        specifier: 0.1.0-beta.6
-        version: 0.1.0-beta.6(@libsql/client@0.17.0(bufferutil@4.1.0)(utf-8-validate@5.0.10))(@opentelemetry/api@1.9.0)(@subsquid/logger@1.4.0)(@types/node@22.19.3)
+        specifier: 0.1.0-beta.17
+        version: 0.1.0-beta.17(@libsql/client@0.17.0(bufferutil@4.1.0)(utf-8-validate@5.0.10))(@opentelemetry/api@1.9.0)(@subsquid/logger@1.4.0)(@types/node@22.19.3)(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
       '@libsql/client':
         specifier: ^0.17.0
         version: 0.17.0(bufferutil@4.1.0)(utf-8-validate@5.0.10)
@@ -462,8 +462,8 @@ packages:
     peerDependencies:
       react-hook-form: ^7.55.0
 
-  '@iankressin/pipes-cli@0.1.0-beta.6':
-    resolution: {integrity: sha512-KMlP7rBT8CW0f+DR1fqoPhcMI41R476vmXLUAr55MuWVc14XsAR37f9B6DrGLrxk1r5wE3P4ER9c0zuthFfttQ==}
+  '@iankressin/pipes-cli@0.1.0-beta.17':
+    resolution: {integrity: sha512-7rPs8YKkc7u8qBHrcdMkPt2d+kvMZlZpOptwPdB5kZ7t3hfdHivZxXC5sK2SkURKTRkxypb5ENyyww8ebu50XA==}
     hasBin: true
 
   '@inquirer/ansi@2.0.2':
@@ -1241,8 +1241,8 @@ packages:
   '@subsquid/logger@1.4.0':
     resolution: {integrity: sha512-Yep4hzpLfmm4pJMXuTnd3n7Hlo18Dce8vwKZduGE9n/p56cHq4BTbAuaXLK50vYKWx7Lyt2obVbJ4otVMWkyYg==}
 
-  '@subsquid/pipes@0.1.0-beta.10':
-    resolution: {integrity: sha512-mHwuBPB7W91tL1GBG4eJlKJPfmqXbrMj/DQlfdNhIskR+uf1znpOsaSAKKBZp5hVKekT90Bd+lT/aJgQ/InfQA==}
+  '@subsquid/pipes@0.1.0-beta.15':
+    resolution: {integrity: sha512-MLaCbGacMeLMnhlMaXn3sz7YUx0FzZMJfzoo4rk1dtiAsoafD35RPUG0Oi/XVm6c5zAed4wsSP7VK44ymfldag==}
     engines: {node: '>=22.15.0'}
     peerDependencies:
       '@clickhouse/client': 1.14.0
@@ -3726,16 +3726,20 @@ snapshots:
       '@standard-schema/utils': 0.3.0
       react-hook-form: 7.71.1(react@19.2.3)
 
-  '@iankressin/pipes-cli@0.1.0-beta.6(@libsql/client@0.17.0(bufferutil@4.1.0)(utf-8-validate@5.0.10))(@opentelemetry/api@1.9.0)(@subsquid/logger@1.4.0)(@types/node@22.19.3)':
+  '@iankressin/pipes-cli@0.1.0-beta.17(@libsql/client@0.17.0(bufferutil@4.1.0)(utf-8-validate@5.0.10))(@opentelemetry/api@1.9.0)(@subsquid/logger@1.4.0)(@types/node@22.19.3)(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)':
     dependencies:
       '@inquirer/prompts': 8.1.0(@types/node@22.19.3)
-      '@subsquid/pipes': 0.1.0-beta.10(@subsquid/logger@1.4.0)(drizzle-orm@0.44.7(@libsql/client@0.17.0(bufferutil@4.1.0)(utf-8-validate@5.0.10))(@opentelemetry/api@1.9.0))
+      '@solana/addresses': 5.4.0(typescript@5.9.3)
+      '@subsquid/pipes': 0.1.0-beta.15(@subsquid/logger@1.4.0)(drizzle-orm@0.44.7(@libsql/client@0.17.0(bufferutil@4.1.0)(utf-8-validate@5.0.10))(@opentelemetry/api@1.9.0))
+      '@subsquid/rpc-client': 4.14.0
+      '@subsquid/solana-typegen': 0.9.1(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
       chalk: 4.1.2
       commander: 14.0.2
       drizzle-orm: 0.44.7(@libsql/client@0.17.0(bufferutil@4.1.0)(utf-8-validate@5.0.10))(@opentelemetry/api@1.9.0)
       inquirer: 13.1.0(@types/node@22.19.3)
       mustache: 4.2.0
       ora: 5.4.1
+      zod: 4.3.6
     transitivePeerDependencies:
       - '@aws-sdk/client-rds-data'
       - '@clickhouse/client'
@@ -3758,8 +3762,12 @@ snapshots:
       - '@vercel/postgres'
       - '@xata.io/client'
       - better-sqlite3
+      - bufferutil
       - bun-types
+      - debug
+      - encoding
       - expo-sqlite
+      - fastestsmallesttextencoderdecoder
       - gel
       - knex
       - kysely
@@ -3770,6 +3778,8 @@ snapshots:
       - sql.js
       - sqlite3
       - supports-color
+      - typescript
+      - utf-8-validate
 
   '@inquirer/ansi@2.0.2': {}
 
@@ -4514,7 +4524,7 @@ snapshots:
       '@subsquid/util-internal-json': 1.2.3
       supports-color: 8.1.1
 
-  '@subsquid/pipes@0.1.0-beta.10(@subsquid/logger@1.4.0)(drizzle-orm@0.44.7(@libsql/client@0.17.0(bufferutil@4.1.0)(utf-8-validate@5.0.10))(@opentelemetry/api@1.9.0))':
+  '@subsquid/pipes@0.1.0-beta.15(@subsquid/logger@1.4.0)(drizzle-orm@0.44.7(@libsql/client@0.17.0(bufferutil@4.1.0)(utf-8-validate@5.0.10))(@opentelemetry/api@1.9.0))':
     dependencies:
       '@subsquid/evm-abi': 0.3.1
       '@subsquid/evm-codec': 0.3.0

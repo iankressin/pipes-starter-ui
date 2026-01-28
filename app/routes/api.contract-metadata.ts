@@ -1,5 +1,5 @@
 import type { ActionFunctionArgs } from 'react-router'
-import { SqdAbiService } from '~/services/sqd-abi.server'
+import { SqdAbiService } from '@iankressin/pipes-cli/services/sqd-abi'
 
 export async function action({ request }: ActionFunctionArgs) {
   try {
@@ -26,8 +26,10 @@ export async function action({ request }: ActionFunctionArgs) {
       })
     }
 
+
     const abiService = new SqdAbiService()
     const metadata = await abiService.getContractData(networkType, network, addresses)
+    console.log({ metadata })
 
     return new Response(JSON.stringify(metadata), { headers: { 'Content-Type': 'application/json' } })
   } catch (error) {

@@ -1,5 +1,12 @@
 import type { ActionFunctionArgs } from 'react-router'
-import { db, shortId } from '~/services/db.server'
+import { createHash } from 'node:crypto'
+import { db } from '~/services/db.server'
+
+export function configHash(input: string, bytes = 8): string {
+  // 8 bytes = 64-bit, produces 16 hex chars
+  const h = createHash('sha256').update(input).digest()
+  return h.subarray(0, bytes).toString('hex')
+}
 
 export async function action({ request }: ActionFunctionArgs) {
   try {
@@ -12,7 +19,7 @@ export async function action({ request }: ActionFunctionArgs) {
       })
     }
 
-    const hash = shortId(jsonConfig)
+    const hash = configHash(jsonConfig)
 
     // Try to insert, if hash exists (UNIQUE constraint violation), just return the hash
     try {
