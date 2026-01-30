@@ -12,7 +12,7 @@ export function CommandStep({ command, configHash }: CommandStepProps) {
   const [showFull, setShowFull] = useState(false)
 
   const shortCommand = configHash
-    ? `npx @iankressin/pipes-cli@latest init --config-id ${configHash}`
+    ? `npx -y @iankressin/pipes-cli@latest init --config-id ${configHash}`
     : command
 
   const displayCommand = showFull || !configHash ? command : shortCommand
