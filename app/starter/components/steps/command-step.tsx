@@ -2,7 +2,10 @@ import { useState } from 'react'
 import { Download, Terminal } from 'lucide-react'
 import { Code } from '~/components/ui/code'
 import { Button } from '~/components/ui/button'
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '~/components/ui/tabs'
 import type { PipesConfig } from '../../types'
+
+export const PIPES_STARTER_CONFIG_FILENAME = 'pipes-starter.json'
 
 type CommandStepProps = {
   command: string
@@ -10,24 +13,26 @@ type CommandStepProps = {
   configHash?: string | null
 }
 
+type TabValue = 'config-id' | 'json' | 'file'
+
 export function CommandStep({ command, config, configHash }: CommandStepProps) {
-  const [showFull, setShowFull] = useState(false)
+  const [tab, setTab] = useState<TabValue>('config-id')
 
   const downloadConfig = () => {
     const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = 'pipes-starter.json'
+    a.download = PIPES_STARTER_CONFIG_FILENAME
     a.click()
     URL.revokeObjectURL(url)
   }
 
-  const shortCommand = configHash
+  const configIdCommand = configHash
     ? `npx -y @iankressin/pipes-cli@latest init --config-id ${configHash}`
     : command
 
-  const displayCommand = showFull || !configHash ? command : shortCommand
+  const fileCommand = `npx -y @iankressin/pipes-cli@latest init --config ${PIPES_STARTER_CONFIG_FILENAME}`
 
   return (
     <section className="space-y-6">
@@ -42,32 +47,32 @@ export function CommandStep({ command, config, configHash }: CommandStepProps) {
         </p>
       </div>
 
-      {configHash && (
-        <div className="flex items-center justify-between rounded-lg border border-purple-500/20 bg-purple-500/10 p-3">
-          <div className="flex-1">
-            <p className="text-xs font-medium text-purple-200">
-              {showFull ? 'Full command with inline config' : 'Short command using config ID'}
-            </p>
-            <p className="text-xs text-purple-300/70 mt-0.5">
-              {showFull
-                ? 'The full JSON is embedded in the command'
-                : `Use the config ID for convenience`}
-            </p>
+      <Tabs value={tab} onValueChange={(v) => setTab(v as TabValue)} className="w-full">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="config-id">Config ID</TabsTrigger>
+          <TabsTrigger value="json">JSON Config</TabsTrigger>
+          <TabsTrigger value="file">JSON File</TabsTrigger>
+        </TabsList>
+        <TabsContent value="config-id" className="mt-3">
+          <div className="relative">
+            <Code language="bash">{configIdCommand}</Code>
           </div>
-          <Button size="sm" variant="outline" onClick={() => setShowFull(!showFull)}>
-            {showFull ? 'Show Short' : 'Show Full'}
+        </TabsContent>
+        <TabsContent value="json" className="mt-3">
+          <div className="relative">
+            <Code language="bash">{command}</Code>
+          </div>
+        </TabsContent>
+        <TabsContent value="file" className="mt-3 space-y-3">
+          <div className="relative">
+            <Code language="bash">{fileCommand}</Code>
+          </div>
+          <Button variant="outline" size="sm" onClick={downloadConfig}>
+            <Download className="size-4 mr-2" />
+            Download {PIPES_STARTER_CONFIG_FILENAME}
           </Button>
-        </div>
-      )}
-
-      <div className="relative">
-        <Code language="bash">{displayCommand}</Code>
-      </div>
-
-      <Button variant="outline" size="sm" onClick={downloadConfig}>
-        <Download className="size-4 mr-2" />
-        Download pipes-starter.json
-      </Button>
+        </TabsContent>
+      </Tabs>
 
       <div className="rounded-lg border border-blue-500/20 bg-blue-500/10 p-4">
         <p className="text-sm text-blue-200">
