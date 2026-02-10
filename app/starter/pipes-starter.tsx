@@ -262,7 +262,7 @@ export function PipesStarter() {
                   />
                 )}
 
-                {activeStep === 'command' && <CommandStep command={command} configHash={configHash} />}
+                {activeStep === 'command' && <CommandStep command={command} config={config} configHash={configHash} />}
               </CardContent>
 
               <div className="flex gap-2 border-t border-white/5 p-4 sm:hidden">

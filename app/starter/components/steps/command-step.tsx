@@ -1,15 +1,27 @@
 import { useState } from 'react'
-import { Terminal } from 'lucide-react'
+import { Download, Terminal } from 'lucide-react'
 import { Code } from '~/components/ui/code'
 import { Button } from '~/components/ui/button'
+import type { PipesConfig } from '../../types'
 
 type CommandStepProps = {
   command: string
+  config: PipesConfig
   configHash?: string | null
 }
 
-export function CommandStep({ command, configHash }: CommandStepProps) {
+export function CommandStep({ command, config, configHash }: CommandStepProps) {
   const [showFull, setShowFull] = useState(false)
+
+  const downloadConfig = () => {
+    const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'pipes-starter.json'
+    a.click()
+    URL.revokeObjectURL(url)
+  }
 
   const shortCommand = configHash
     ? `npx -y @iankressin/pipes-cli@latest init --config-id ${configHash}`
@@ -51,6 +63,11 @@ export function CommandStep({ command, configHash }: CommandStepProps) {
       <div className="relative">
         <Code language="bash">{displayCommand}</Code>
       </div>
+
+      <Button variant="outline" size="sm" onClick={downloadConfig}>
+        <Download className="size-4 mr-2" />
+        Download pipes-starter.json
+      </Button>
 
       <div className="rounded-lg border border-blue-500/20 bg-blue-500/10 p-4">
         <p className="text-sm text-blue-200">
